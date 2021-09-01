@@ -3,7 +3,7 @@
 * [DSA](DSA/DSA_A.md)
     * [DSA期中攻略](DSA/DSA_A.md)
     * [DSA期末攻略](DSA/DSA_B.md)
-    * [DSA期中真题 2020](DSA/DSA_midterm_exam.md)
+    * [DSA期中真题 2020](DSA/DSA_midterm_exam_2020.md)
 * [Object-Oriented and Functional programming](OOFP/readability.md)
     * [Pattern Matching](OOFP/pattern_matching.md)
     * [Readability](OOFP/readability.md)
