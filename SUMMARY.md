@@ -4,4 +4,6 @@
     * [DSA期中攻略](DSA/DSA_A.md)
     * [DSA期末攻略](DSA/DSA_B.md)
     * [DSA期中真题 2020](DSA/DSA_midterm_exam.md)
+* [Object-Oriented and Functional programming](OOFP/pattern_matching.md)
+    * [Pattern Matching](OOFP/pattern_matching.md)
 * [Logic and Modeling](Logic_Modeling/LM.md)
