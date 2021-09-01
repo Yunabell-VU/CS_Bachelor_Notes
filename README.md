@@ -11,8 +11,10 @@ https://github.com/Yunabell-VU/CS_Bachelor_Notes
 ****
 
 **Contents included so far:**
+- System Architecture
 - OOFP (Obeject-Oriented and Functional program)
 - DSA (Data Structures and Algorithms)
+- Statistical Method
 - Logic and Modeling
 - Database
 - Informational Management
