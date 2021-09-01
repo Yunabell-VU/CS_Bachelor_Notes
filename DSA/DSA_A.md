@@ -164,8 +164,10 @@ hence we have: $log_a b · log_b n = log_a n$​
 
 complete $\Rightarrow$ almost complete $\Rightarrow$ normal binary
 
-`an almost complete binary tree corresponds naturally to an array`
-![image_1ej0ajlam7tk1s3km7u1sqa95ld1.png-24.2kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej0ajlam7tk1s3km7u1sqa95ld1.png)
+`an almost complete binary tree corresponds naturally to an array`  
+
+![image_1ej0ajlam7tk1s3km7u1sqa95ld1.png-24.2kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej0ajlam7tk1s3km7u1sqa95ld1.png)  
+
 
 - let the height of an almost complete binary tree is $h$
   `if the lowest level contains one element`
@@ -249,6 +251,8 @@ Alogorithm insertionSort(A,n):
       i := i - 1
     A[i+1] := key
 ```
+  
+
 ![image_1eive5g50110d12hc1kd91e8e1m10p.png-75.8kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eive5g50110d12hc1kd91e8e1m10p.png)
 
 
@@ -293,7 +297,10 @@ MERGE(A,p,q,r)
     else A[k] = R[j]
       j = j + 1
 ```
-![image_1eivj34sek2fbsk1vtf2lm194b26.png-110.2kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivj34sek2fbsk1vtf2lm194b26.png)
+  
+
+![image_1eivj34sek2fbsk1vtf2lm194b26.png-110.2kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivj34sek2fbsk1vtf2lm194b26.png)  
+
 ![image_1eivj4h7m1emek4o0tep7bpj2j.png-68.3kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivj4h7m1emek4o0tep7bpj2j.png)
 
 
@@ -329,7 +336,10 @@ Algorithm MaxHeapify(A,i):
     swap(A[i], A[largest])
     MaxHeapify(A, largest)
 ```
-![image_1eivk54ni1qcf1o5kj071kmj190130.png-94.8kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivk54ni1qcf1o5kj071kmj190130.png)
+  
+
+![image_1eivk54ni1qcf1o5kj071kmj190130.png-94.8kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivk54ni1qcf1o5kj071kmj190130.png)  
+
 
 `buildMaxHeap`
 ```javascript
@@ -338,7 +348,10 @@ Algorithm buildMaxHeap(H):
   for i = floor(H.length/2 ) downto 1 do //index great than H.leangth/2 are leaves(trivial max heap)
     MaxHeapify(H,i)
 ```
-![image_1eivkg68m13d891o1o911ek1gbk3d.png-62.4kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivkg68m13d891o1o911ek1gbk3d.png)
+  
+
+![image_1eivkg68m13d891o1o911ek1gbk3d.png-62.4kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivkg68m13d891o1o911ek1gbk3d.png)  
+
 ![image_1eivkgqkr1kc8gca7nhgsm5nn3q.png-62.2kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivkgqkr1kc8gca7nhgsm5nn3q.png)
 
 `heapsort`
@@ -350,6 +363,8 @@ Algorithm heapsort(H):
     H.heap_size := H.heap_size - 1
     MaxHeapify(H,1)
 ```
+  
+
 ![image_1eivkigjirjq1vsv1d931suat8e47.png-93.4kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivkigjirjq1vsv1d931suat8e47.png)
 
 
@@ -404,6 +419,8 @@ Algorithm heapIncreaseKey(H,i,k)
     swap(H[parent(i)]), H[i])
     i := parent(i) // floor(i/2)
 ```
+  
+
 ![image_1eivlpeu2sod7841bqvn6d7il4k.png-96.7kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivlpeu2sod7841bqvn6d7il4k.png)
 
 
@@ -432,6 +449,8 @@ Algorithm partition(A,p,r)
   exchange A[i+1] with A[r]
   return i + 1
 ```
+  
+
 ![image_1eivnpkv215pv19up1pa8oot1gs95h.png-128.7kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivnpkv215pv19up1pa8oot1gs95h.png)
 
 `quickSort`
@@ -481,6 +500,8 @@ Algorithm countingSort(A,B,k)
     B[C[A[j]]] := A[j]
     C[A[j]] := C[A[j]] - 1
 ```
+  
+
 ![image_1eivp0chffpn10jhviev1i785u.png-79.2kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivp0chffpn10jhviev1i785u.png)
 
 
@@ -501,6 +522,8 @@ Algorithm radixSort(A,d)
   for i := 1 to d do
   use some stable sort on digit d
 ```
+  
+
 ![image_1eivpcqb316l9894g051qa31p6k6b.png-49.7kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivpcqb316l9894g051qa31p6k6b.png)
 
 
@@ -527,6 +550,8 @@ Algorithm bucketSort(A):
     insertionSort(B[i])
   concatenate B[0],B[1],...,B[n-1]
 ```
+  
+
 ![image_1eivplu8n1qc56oa16kbs9ahkg6o.png-60.2kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivplu8n1qc56oa16kbs9ahkg6o.png)
 
 
@@ -547,15 +572,18 @@ Algorithm bucketSort(A):
 
 $T(n) = \Theta(n^2)$​
 
+  
 
 
-![image_1eivsiflnemh13pk5nk1f1t1n7j75.png-102.3kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivsiflnemh13pk5nk1f1t1n7j75.png)
+![image_1eivsiflnemh13pk5nk1f1t1n7j75.png-102.3kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivsiflnemh13pk5nk1f1t1n7j75.png)  
+
 ![image_1eivsn5jkocgjc6l6p1o4h10gi7i.png-46.4kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivsn5jkocgjc6l6p1o4h10gi7i.png)
 
 >**Best Case**
 
 - the best case occurs if $A[i] > key$ always fails
 - this is the case if the input is **sorted**
+  
 
 ![image_1eivt8q66k4b8c0up8aml1hr77v.png-28.2kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivt8q66k4b8c0up8aml1hr77v.png)
 
@@ -566,7 +594,8 @@ $T(n) = \Theta(n^2)$​
 
 #### Merge Sort
 
-`recursion tree`
+`recursion tree`  
+
 ![image_1eivtrs4s1fkg1fdg73r4oa1sh18p.png-26.9kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1eivtrs4s1fkg1fdg73r4oa1sh18p.png)
 
 - Time complexity of merging $n$ elements is in $\Theta(n)$
@@ -603,8 +632,10 @@ $T(n) = T(\frac{2}{3}n) + 1$ if $n>1$ gives $T(n) \in O(logn)$
 
 >**buildMaxHeap**
 
-- build MaxHeap is in $O(n)$
-![image_1ej02cgai1mmksdn8mm16ptquba0.png-109.5kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej02cgai1mmksdn8mm16ptquba0.png)
+- build MaxHeap is in $O(n)$  
+
+![image_1ej02cgai1mmksdn8mm16ptquba0.png-109.5kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej02cgai1mmksdn8mm16ptquba0.png)  
+
 ![image_1ej02aur3eng9bog1k7okalg9j.png-52.9kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej02aur3eng9bog1k7okalg9j.png)
 
 >**heapsort**
@@ -686,11 +717,14 @@ at least half cases are good
 
 - hence: height is in $O(logn)$
 
-- work per depth: in $\Theta(n)$​​
+- work per depth: in $\Theta(n)$​​  
 
-  ![image_1ej04pvct3hupmd113fnfp1oeqat.png-34kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej04pvct3hupmd113fnfp1oeqat.png)
 
-`with random key as pivot from input sequence`
+  ![image_1ej04pvct3hupmd113fnfp1oeqat.png-34kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej04pvct3hupmd113fnfp1oeqat.png)  
+
+
+`with random key as pivot from input sequence`  
+
 _Average_ time complexity of quicksort is in $O(nlogn)$
 _Expected_ time complexity of quicksort is in $O(nlogn)$
 
@@ -702,7 +736,8 @@ _Expected_ time complexity of quicksort is in $O(nlogn)$
 
 #### Insertion Sort
 
-![image_1ej0da0t6tif12vomsadueptii5.png-53.4kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej0da0t6tif12vomsadueptii5.png)
+![image_1ej0da0t6tif12vomsadueptii5.png-53.4kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej0da0t6tif12vomsadueptii5.png)  
+
 ![image_1ej0dabc77jsemkhrrq891as7ii.png-24.7kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej0dabc77jsemkhrrq891as7ii.png)
 
 
@@ -719,13 +754,15 @@ _Expected_ time complexity of quicksort is in $O(nlogn)$
 
 
 
-`Worst Case (almost the same as Insertion Sort)`
+`Worst Case (almost the same as Insertion Sort)`  
+
 
 ![image_1ej0d76j1p0a1h591kh34p4iq8fr.png-64.9kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej0d76j1p0a1h591kh34p4iq8fr.png)
 
 
 
-`Best Case (almost the same as Merge Sort)` 
+`Best Case (almost the same as Merge Sort)`  
+
 
 ![image_1ej0d81991q0ctv91gj21ec71lrrg8.png-52.8kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ej0d81991q0ctv91gj21ec71lrrg8.png)
 

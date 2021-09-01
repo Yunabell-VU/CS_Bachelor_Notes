@@ -37,7 +37,8 @@ hash table chain search|$O(n)$| worst case: every key hashes the same slot; aver
 
 ###  Stack
 
-- A linear data structure with last-in-first-out (**LIFO**) behaviour : the element deleted from the set is the one most recently inserted.
+- A linear data structure with last-in-first-out (**LIFO**) behaviour : the element deleted from the set is the one most recently inserted.  
+
 
 ![image_1ejncnion1qkfhu6esrm6717v89.png-53.5kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ejncnion1qkfhu6esrm6717v89.png)
 
@@ -89,7 +90,8 @@ Algorithm pop(S):
 
 ### Queue
 
-- A linear data structure with first-in-first-out(**FIFO**) behaviour : the element deleted is always the one that has been in the set for the longest time. (add and remove at different sides)
+- A linear data structure with first-in-first-out(**FIFO**) behaviour : the element deleted is always the one that has been in the set for the longest time. (add and remove at different sides)  
+
 
 ![image_1ejne37k01mnsijg7mdnkhk66m.png-77.5kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ejne37k01mnsijg7mdnkhk66m.png)
 
@@ -218,9 +220,11 @@ Algorithm head(Q):
 - The order in a linked list is determined by a pointer in each object.
 - We have access to elements and access to an element gives us access to the next element.
 - In case of doubly linked list, we also have access to the previous element.
-- The list has an attribute giving us access to the head.
+- The list has an attribute giving us access to the head.  
 
-![image_1ejngvkuv1t7p1dni2r117021nja13.png-83.9kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ejngvkuv1t7p1dni2r117021nja13.png)
+
+![image_1ejngvkuv1t7p1dni2r117021nja13.png-83.9kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ejngvkuv1t7p1dni2r117021nja13.png)  
+
 
 - We have elements usually written `x`, with `x.key` which gives the key, the elements may also contain other satellite data.
 - If `x.next = NIL`, the element `x` has no successor and is therefore the last element, or `tail` of the list.
@@ -290,8 +294,10 @@ Algorithm listDelete(L,x):
 
 #### Sentinels
 
-- A sentinel is a dummy element (so, no `key`) that simplifies dealing with boundaries.
-![image_1ekejdog3n7814rr6j9dthmqip.png-71.3kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ekejdog3n7814rr6j9dthmqip.png)
+- A sentinel is a dummy element (so, no `key`) that simplifies dealing with boundaries.  
+
+![image_1ekejdog3n7814rr6j9dthmqip.png-71.3kB](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image_1ekejdog3n7814rr6j9dthmqip.png)  
+
 
 - `L.nil` represents `nil` and is as the start.
 - `L.nil.next` points to the head of the list.
