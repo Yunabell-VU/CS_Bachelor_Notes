@@ -7,4 +7,6 @@
 * [Object-Oriented and Functional programming](OOFP/readability.md)
     * [Pattern Matching](OOFP/pattern_matching.md)
     * [Readability](OOFP/readability.md)
+    * [模拟题1](OOFP/mock1.md)
+    * [模拟题2](OOFP/mock2.md)
 * [Logic and Modeling](Logic_Modeling/LM.md)
