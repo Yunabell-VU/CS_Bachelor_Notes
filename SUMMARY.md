@@ -13,3 +13,6 @@
 * [Database](Database/iSubmit.md)
     * [iSubmit非SQL部分解题思路](Database/iSubmit.md)
     * [iSubmit--SQL](Database/SQL.md)
+* [Informational Management](Info_Mana/midterm_note.md)
+    * [IM期中攻略](Info_Mana/midterm_note.md)
+
