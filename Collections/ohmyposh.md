@@ -200,4 +200,12 @@ echo $profile
 到这一步，整个美化应该已经完成，重启一下VSCode，观察是否美化成功。
 
 
+## 参考
+
+1. Oh-My-Posh 官网 https://ohmyposh.dev/docs/pwsh
+2. Base16 Terminal Colors https://glitchbone.github.io/vscode-base16-term/#/dracula
+3. 打造 Windows 优雅终端（Windows Termial+Oh-My-Posh）https://zhuanlan.zhihu.com/p/144611023
+4. Nerd Fonts https://www.nerdfonts.com/font-downloads
+5. oh-my-posh3及oh-my-zsh提示prompt出现乱码的原因及使用Nerd字体的解决方法 https://blog.csdn.net/yihuajack/article/details/111405007
+6. 美化PowerShell（含WindowsTerminal和VSCode终端）https://blog.csdn.net/jeremyjone/article/details/106236656
 
