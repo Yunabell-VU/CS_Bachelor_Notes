@@ -18,4 +18,6 @@ Hypothesis_Testing.md)
     * [iSubmit--SQL](Database/SQL.md)
 * [Informational Management](Info_Mana/midterm_note.md)
     * [IM期中攻略](Info_Mana/midterm_note.md)
+* [杂项](Collections/ohmyposh.md)
+    * [Win下VSCode终端美化方案](Collections/ohmyposh.md)
 
