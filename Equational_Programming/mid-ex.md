@@ -556,7 +556,7 @@ whereas
 
 #### Definition
 
-> **Strongly normalizing:**
+> **Terminating / Strongly normalizing:**
 >
 > - A term P is said to be terminating or strongly normalizing (SN) if **all** reduction sequences starting in P are finite. 
 > - That is: P is not the start of an infinite reduction.
@@ -587,7 +587,13 @@ whereas
 (a) (λx. x x)(λfy.(f y)) 
 
 ```
-(λx. x x)(λfy.(f y)) is strongly normalizing and hence also weakly normalizing.
+(λx. x x)(λfy.(f y)) is strongly normalizing and hence also weakly normalizing because all its reductions are finite.
+We have 
+	(λx. x x)(λf. λy.(f y)) →β (λf. λy.(f y)) (λf. λy.(f y)) →β
+	λy.(λf. λy.(f y)) y →β 
+	λy' λy. y' y 
+which ends in normal form, and there is no other reduction sequence possible. 
+So self-application does not necessarily leads to non-termination.
 ```
 
 
@@ -608,8 +614,11 @@ because it has Ω as subterm, which reduces in one step to itself.
 
 ```
  (λx. x Ω) (λy. y) is not weakly normalizing and hence not strongly normalizing.
+ The reducts of (λx. x Ω) (λy. y) are (λx. x Ω) (λy. y) itself, and (λy. y) Ω, and Ω.
  
-The reducts of (λx. x Ω) (λy. y) are (λx. x Ω) (λy. y) itself, and (λy. y) Ω, and Ω.
+We can see this by reducing the term using the leftmost-outermost reduction strategy 
+	(λx. x Ω) (λy. y) →β (λy. y) Ω → Ω → Ω → . . ..
+If the leftmost-outermost reduction strategy yields an infinite reduction, then the initial term does not have a normal form.
 ```
 
 
@@ -630,4 +639,726 @@ A A →β A A A →β A A A A →β . . .¿
 ****
 
 ## Exercise 2
+
+#### Q1
+
+**Show that Curry’s fixed point combinator**  
+
+​	`λf.(λx. f (x x)) (λx. f (x x))`
+
+**and Turing’s fixed point combinator**
+
+​	`T = (λx. λy. y (x x y)) (λx. λy. y (x x y))`
+
+**are indeed fixed point combinators.**
+
+
+
+##### Definition
+
+> **Fixed point:**
+>
+> (待补)
+
+> **Fixed point combinator:**
+>
+> (待补)
+
+
+
+##### Solution:
+
+```
+We show: 
+	for every λ-term F we have Y F =β F (Y F).
+
+Let 
+	F be an arbitrary λ-term. 
+We have :
+	Y F = (λf.(λx. f (x x)) (λx. f (x x))) F
+		→β (λx. F (x x)) (λx. F (x x))
+		→β F ((λx. F (x x)) (λx. F (x x)))
+		←β F ((λf.(λx. f (x x)) (λx. f (x x))) F)
+		= F (Y F)
+So indeed
+	F (Y F) =β Y F
+
+
+Now we consider Turing’s fixed point combinator T = (λx. λy. y (x x y)) (λx. λy. y (x x y)).
+
+We aim to show: 
+	for every λ-term F we have TF =β F (TF ). 
+Take 
+	an arbitrary λ-term F. 
+
+We use 
+	t = λx. λy. y (x x y). 
+
+We have:
+	TF = (λx. λy. y (x x y)) (λx. λy. y (x x y)) F
+		→β (λy. y (t t y)) F
+		→β F (tt F )
+		= F (TF )
+So we indeed
+	TF =β F (TF )
+
+We even have
+	TF →∗β F (TF )
+
+Remark: 
+	if we have to show that a λ-term P is a fixed point combinator, we have to show that P F =β= F (P F) for every λ-term F. 
+	So the reasoning starts with taking an arbitrary λ-term.
+```
+
+
+
+****
+
+#### Q2
+
+**Reduce Y (λa. b) and T(λa. b) to obtain a fixed point of λa. b.**
+
+
+
+##### Solution
+
+```
+We consider Y (λa. b):
+	Y (λa. b) = (λf.(λx. f (x x)) (λx. f (x x))) (λa. b)
+		→β (λx.(λa. b) (x x)) (λx.(λa. b) (x x))
+		→β (λa. b) ((λx.(λa. b) (x x))) ((λx.(λa. b) (x x)))
+		→β b
+		
+Alternatively: 
+we use that we already know 	
+	Y F =β F (Y F), for any F, from the previous question. 
+
+That gives, 
+taking 
+	λa. b for F:
+		Y (λa. b) =β (λa. b) (Y (λa. b)) →β b
+Here we get β-equality.
+
+For the question show β-equality of Y (λa. b) and b both approaches are correct. 
+For the question reduce Y (λa. b) only the first approach is correct.
+
+But of course the point is to see that for the specific example of the function that gives back b for any input, 
+the term b is a fixed point, which is indeed found using the fixed point combinator Y.
+
+
+Now we consider T(λa. b):
+first explicitly, 
+using again 
+	t = λx. λy. y (x x y)
+
+first explicitly:
+	T(λa. b) = (λx. λy. y (x x y)) (λx. λy. y (x x y)) (λa. b)
+		→β (λy. y (t t y)) (λa. b)
+		→β (λa. b) (tt(λa. b) )
+		→β b
+
+Alternatively, and faster: 
+we know from the previous question that 
+	TF →∗β
+	F (TF ) for any F. 
+So we have
+	T(λa. b) →∗β (λa. b) (T(λa. b) ) →β b
+
+```
+
+- 注意，在上面的解法中，我们使用了 abbreviation 替换（t = λx. λy. y (x x y)）来方便计算，使用这种方法时注意被替换的 term 最好是 closed term （不包含 free variable 的 term），否则会很麻烦。比如，如果 term 中包含一个 free variable y，那么我们替换时，需要写做 `t(y) = ...` 表示 y 是一个 argument，替换后的项会跟着 argument 变动。
+
+- 注意上面解法中有出现 $\rightarrow _\beta*$ 和  $\rightarrow _\beta$，这代表精确的reduction步骤数，具体解释参考 `Exercise 1 -> Q8 -> Definition -> β-reduction sequence`。
+
+
+
+****
+
+#### Q3
+
+**Suppose P is a fixed point combinator (we do not know which one).** 
+
+**Show that P (S I) is also a fixed point combinator.** 
+
+**We use S = λx. λy. λz.(x z) (y z) and I = λx. x.**
+
+
+
+##### Solution
+
+```
+We use Assume a fixed point combinator P, 
+so we know that
+	P F =β F (P F) for any F. 
+We aim to show that 
+	P (S I) is a fixed point combinator. 
+
+Therefore, we take 
+	an arbitrary λ-term F, 
+and we aim to show
+	(P (S I)) F =β F ((P (S I)) F), 
+	or, 
+	using fewer parentheses: 
+		P (S I) F =β F (P (S I) F). 
+We have:
+	P (S I) F =β (S I) (P (S I)) F
+			= (λx. λy. λz.(x z) (y z))I(P (S I)) F
+			→∗β (I F) ((P (S I)) F)
+			→β F ((P (S I)) F)
+
+In the first step we use that P is a fixed point combinator. 
+In the second step we unfold the definition of S. 
+In the third step we do three β-reduction steps. 
+In the fourth step we reduce I F to F in one step. 
+
+So indeed
+	P (S I) F =β F (P (S I) F).
+```
+
+- This exercise illustrates that from a fixed point combinator we can build another fixed point combinatory by applying it to S I. 
+- With  'another’we mean‘not β-equal’. 
+- Note that we did not show that they are not β-equal.
+
+
+
+****
+
+#### Q4
+
+**Give the reduction graphs of the following terms:** 
+
+(a) (I x) (I x); 
+
+(b) I(I I); 
+
+(c) (λx.x x)(I z);
+
+
+
+##### Solution:
+
+(a) (I x) (I x);   
+
+![image-20211115225650521](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115225650521.png)  
+
+
+
+(b) I(I I);   
+
+![image-20211115225706917](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115225706917.png)  
+
+- both are correct
+
+- similar as the following example:
+
+  ![image-20211115225733945](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115225733945.png)  
+
+
+
+(c) (λx.x x)(I z);  
+
+![image-20211115225807089](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115225807089.png)  
+
+
+
+
+
+****
+
+#### Q5
+
+与 `Exercise 1 -> Q13` 一致 （同一题）
+
+
+
+****
+
+#### Q6
+
+**Consider the term M = (λx.((λu. u) x) (λz. x Ω)) λy. z.**
+
+(a) Depict the term tree of M. (Unfold the definition of Ω.) 
+
+(b) Give two different α-equivalent renderings of M. 
+
+(c) Reduce M using the leftmost-innermost (call-by-value) strategy. 
+
+(d) Reduce M using the leftmost-outermost (call-by-need) strategy.
+
+
+
+##### (没有答案 + 课上没讲， 待补充)
+
+
+
+****
+
+#### Q7
+
+**Consider the term**
+
+​	`(λx. λy. x (I I)) (λz. v z) Ω`.
+
+**Reduce is according to the leftmost-innermost strategy, according to the leftmost-outermost to normal form (if possible),** 
+
+**and according to the lazy reduction strategy to weak head normal form (if possible).**
+
+
+
+##### Definition
+
+> **Call by value:**
+>
+> (待补)
+
+> **Call by need:**
+>
+> (待补)
+
+> **Lazy reduction:**
+>
+> (待补)
+
+> **Weak head normal form:**
+>
+> (待补)
+
+
+
+##### Solution:
+
+- Leftmost-innermost:
+
+  ![image-20211115225855883](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115225855883.png)  
+
+  
+
+- Leftmost-outermost:
+
+  ![image-20211115225931321](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115225931321.png)  
+
+  
+
+****
+
+#### Q8
+
+**Reduce in the term** 
+
+​	`(λx. f (x Ω I)) (λu. λv. v w)` 
+
+**repeatedly the lazy redex until a WHNF is reached.**
+
+
+
+##### Solution:
+
+```
+(λx. f (x Ω I)) (λu. λv. v w) → f ((λu. λv. v w) Ω I)
+
+We stop here, because the variable f applied to the term 
+	((λu. λv. v w) Ω I)
+is a weak head normal form.
+```
+
+
+
+****
+
+#### Q9
+
+**Reduce the following term in a minimum number of steps to normal form:** 
+
+​	`(λx.(λy. z y y) (I I)) (I I)`.
+
+
+
+##### Solution:
+
+```
+Reading from left to right, the first redex 
+	I I will be substituted for y
+so it will be copied twice,  and the second redex 
+	I I will be substituted for x
+so it will be erased (or copied zero times). 
+
+Therefore, we minimize the number of β-reduction steps 
+if we reduce the first 
+	I I to I
+before it is substituted for y
+and we do not reduce the second 
+	I I
+but just let it be erased by substituting it for x.
+
+(λx.(λy. z y y) (I I)) (I I) →β (λy. z y y) (I I)
+				→β (λy. z y y)I
+				→β z I I
+
+```
+
+
+
+****
+
+#### Q10
+
+**Consider the function** `foldr`:
+
+`foldr f b [] = b` 
+
+`foldr f b (h:t) = f h (foldr f b t)`
+
+**Use it to give a definition of the function myconcat that takes as input a list of lists,** 
+
+**and that gives back as output the concatenation of those lists.** 
+
+
+
+**Example:**
+
+```haskell
+*Main> myconcat [[1,2,3] , [4,5,6]] 
+[1,2,3,4,5,6]
+```
+
+**Give the first four steps of the evaluation of** 
+
+​	`myconcat [[1,2,3] , [4,5,6]]`
+
+**using informal equational reasoning.**
+
+
+
+##### Solution:
+
+```
+We define:
+	myconcat = foldr append []
+	append [] k = k
+	append (h : t) k = h : (append t k)
+	
+We now evaluate 
+	myconcat[[1, 2, 3], [4, 5, 6]]:
+
+myconcat[[1, 2, 3], [4, 5, 6]] = foldr append [] [[1, 2, 3], [4, 5, 6]]
+					= append [1, 2, 3] (foldr append [] [[4, 5, 6]])
+					= 1 : append [2, 3],(foldr append [] [[4, 5, 6]])
+					= 1 : 2 : append [3],(foldr append [] [[4, 5, 6]])
+					= 1 : 2 : 3 : append [],(foldr append [] [[4, 5, 6]])
+					= 1 : 2 : 3 : (foldr append [] [[4, 5, 6]])
+					= 1 : 2 : 3 : (append [4, 5, 6] (foldr append [] []))
+					= 1 : 2 : 3 : 4 : (append [5, 6, ] (foldr append [] []))
+					= 1 : 2 : 3 : 4 : 5 : (append [6],(foldr append [] []))
+					= 1 : 2 : 3 : 4 : 5 : 6 : (append [](foldr append [] []))
+					= 1 : 2 : 3 : 4 : 5 : 6 : (foldr append [] [])
+					= 1 : 2 : 3 : 4 : 5 : 6 : []
+					= [1, 2, 3, 4, 5, 6]
+```
+
+- 考试时不会出需要 evaluate 这么多步骤的题目，但基础思想不变。
+
+
+
+****
+
+#### Q11
+
+**Show the following:** (ite : if - then - else)
+
+​	ite true P Q $\rightarrow _\beta$ P
+
+
+
+#### Definition
+
+> **Booleans:**
+>
+> (待补)
+
+
+
+##### Solution
+
+```
+Note that P and Q are arbitrary λ-terms.
+
+ite true P Q 				= 		(unfold the definition)
+(λx. λy. λz. x y z) true P Q 	 →β
+(λy. λz.true y z) P Q 		    →β
+(λz.true P z) Q 			→β
+true P Q 				     = 		   (unfold the definition)
+(λx. λy. x) P Q 			 →β
+(λy. P) Q 				     →β
+P
+```
+
+- Note that P and Q are not necessarily closed, but by the variable convention free variables in P or in Q are not captured by substituting P or Q below a λ.
+
+
+
+****
+
+#### Q12
+
+**Show the following:** 
+
+​	or true false $\rightarrow _\beta$ true.
+
+
+
+##### Solution
+
+```
+or true false 				= 	(unfold the definition)
+(λx. λy. x true y)true false 	  →β
+(λy.true true y)false 		     →β
+true true false 			 = 	(unfold the definition)
+(λx. λy. x)true false 		      →β
+(λy.true)false 				 →β
+true
+```
+
+
+
+****
+
+#### Q13
+
+**Show that** 
+
+​	Suc $c_1$ $\rightarrow _\beta$ $c_2$, 
+
+**with Suc defined as**  `λxsz. s (x s z)`.
+
+
+
+##### Definition
+
+> **Successor (Suc):**
+>
+> - Successor and Church numerals, check CourseNotes_Lambda_Calculus -> 4.4 Church numerals
+
+
+
+##### Solution:
+
+```
+Suc c1 					= 	(unfold the definition)
+(λxsz. s (x s z)) c1 		    →β
+λs. λz. s (c1 s z) 			  =      (unfold the definition)
+λs. λz. s ((λu. λv. u v) s z)       →β
+λs. λz. s ((λv. s v) z)		      →β
+λs. λz. s (s z) 			= 	 (fold the definition)
+c2
+```
+
+
+
+****
+
+#### Q14
+
+**Show that** 
+
+​	$Plus\  c_1\  c_2\  \rightarrow _\beta\  c_3$​ 
+
+**with Plus defined as** `λmn. λsz. m s (n s z)`.
+
+
+
+##### Solution:
+
+```
+Plus c1 c2 						= (unfold the definition)
+(λmn. λsz. m s (n s z)) c1 c2 		   →β
+(λn. λsz. c1 s (n s z)) c2 			    →β
+λsz. c1 s (c2 s z) 				       = (unfold the definition)
+λsz. c1 s ((λu λv. u (u v)) s z) 		→β
+λsz. c1 s ((λv. s (s v)) z) 		      →β
+λsz. c1 s (s (s z)) 				= (unfold the definition)
+λsz.(λu λv. u v) s (s (s z)) 		      →β
+λsz.(λv. s v) (s (s z)) 			    →β
+λsz. s (s (s z)) 				       = (fold the definition)
+c3
+```
+
+
+
+****
+
+#### Q15
+
+**Show that for arbitrary P and Q we have the following:** 
+
+​	$π_1\  (π\  P\  Q)\ \rightarrow _\beta\  P$.
+
+
+
+#### （没有答案，待补）
+
+
+
+****
+
+#### Q16
+
+**We represent lists using** 
+
+​	`nil := λxy. y` and `cons := λht. λz. z h t = π` 
+
+**Give a λ-term for empty (the function that takes as input a list and yields true if the list is empty and false otherwise), and show that empty nil reduces to true.**
+
+
+
+#### (没有答案，待补）
+
+
+
+****
+
+#### Q17
+
+**We define** 
+
+​	`τ = λx1. λx2. λx3. λz. z x1 x2 x3`. 
+
+**This λ-term can be used to build triples:** 
+
+​	$τ\ P_1\  P_2\ P_3\ \rightarrow _\beta\ λz.\ z P_1\ P_2\ P_3$. 
+
+**Now define λ-terms τ1, τ2 and τ3 representing the first, second, and third projection.** 
+
+**Show that they have the right behaviour, that is:** 
+
+​	$τ_1\ (τ\ P_1\ P_2\ P_3)\ \rightarrow _\beta\ P_1, $
+
+​	$τ_2\ (τ\ P_1\ P_2\ P_3)\ \rightarrow _\beta\ P_2, $​​
+
+​	$τ_3\ (τ\ P_1\ P_2\ P_3)\ \rightarrow _\beta\ P_3. $​
+
+
+
+##### Solution:
+
+```
+The idea is to adapt the first and second projection from the pairing operator to this case of triples. 
+We define the following:
+	τ1 = λy. y (λx1. λx2. λx3. x1)
+	τ2 = λy. y (λx1. λx2. λx3. x2)
+	τ3 = λy. y (λx1. λx2. λx3. x3)
+
+We now show that these terms have the right behaviour. 
+
+Take 
+	arbitrary terms P1, P2, P3. 
+
+We have the following:
+	τ1 (τ P1 P2 P3) = τ1 ((λx1. λx2. λx3. λz. z x1 x2 x3) P1 P2 P3)
+				→∗β τ1 (λz. z P1 P2 P3)
+				= (λy. y (λx1. λx2. λx3. x1)) (λz. z P1 P2 P3)
+				→β (λz. z P1 P2 P3) λx1. λx2. λx3. x1
+				→β (λx1. λx2. λx3. x1) P1 P2 P3
+				→∗β P1
+
+```
+
+
+
+****
+
+#### Q18
+
+**a. Give a specification for the operation exclusive or, notation xor, that takes two booleans as input and yields true if exactly one of the inputs is true.** 
+
+
+
+##### Solution:
+
+```
+The (to be found) term xor should satisfy the following:
+	xor true true =β false
+	xor true false =β true
+	xor false true =β true
+	xor false false =β false
+```
+
+
+
+**b. Give a λ-term for xor.** 
+
+
+
+##### Solution:
+
+```
+We define 
+	xor = λx. λy. x (not y) y, with not = λx. x false true.
+
+A bit of intuition: 
+	xor takes two inputs, 
+more intuitively: two booleans as input (something which cannot be enforced in the untyped λ-calculus). 
+Hence the start with two abstractions. 
+
+If the first input is or evaluates to true, 
+then from the first two lines of the specification we see that we should return the negation of the second input. 
+
+Hence the first argument of x, the one that is returned if x is true, is not y.
+
+If the first input is or evaluates to false, then from the last two lines of the specification we see that we should return the second input.
+Hence the second argument of x, the one that is returned if x is false, is y.
+
+More straight forward:
+
+xor = λx λy. ? 
+(two arguments)
+
+true = λx. λy . x
+false = λx. λy. y
+
+xor = λx. λy. x ① ②
+if ① true, 
+then, return not ②,
+because:
+	x true false = true
+	x true true = false
+
+therefore, 
+	xor = λx. λy. x (not y) ②
+if ① false,
+then, return ②,
+because:
+	x false true = true
+	x false false = false
+ 
+ therefore,
+	xor = λx. λy. x (not y) y
+```
+
+
+
+**c. Show for one of the four possible inputs that xor satisfies the specification.**
+
+
+
+##### Solution:
+
+```
+xor false true 
+= (λx. λy. x (not y) y)false true
+→∗β false (not true)true
+= (λx. λy. y) (not true)true
+→∗β true
+
+More detailed version:
+
+xor true false
+= ( λx. λy. x (not y) y) true false
+->-> true (not false) false
+= (λx. λy.x) (not false) false
+->-> not false
+= (λx.x false true) false
+-> false false true
+= (λx. λy. y) false true
+->-> true
+```
 
