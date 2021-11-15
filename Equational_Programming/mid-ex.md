@@ -34,7 +34,7 @@
 
 #### Q3
 
-**Write the following λ-term in the notation with all parentheses and all λs:  **
+**Write the following λ-term in the notation with all parentheses and all λs:**
 
 `(λxy. x (y z)) λx. y x x`.
 
@@ -74,7 +74,7 @@
 
 
 
-![image-20211115165406830](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115165406830.png)
+![image-20211115165406830](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115165406830.png)  
 
 
 
@@ -296,7 +296,7 @@ not α-convertible
 
 
 
-![image-20211115174449645](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115174449645.png)
+![image-20211115174449645](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115174449645.png)  
 
 ```
  There exists no β-redex, so is in β-normal form.
@@ -310,7 +310,7 @@ not α-convertible
 
 
 
-![image-20211115174803553](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115174803553.png)
+![image-20211115174803553](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115174803553.png)  
 
 ```
 Not in β-normal form.
@@ -319,11 +319,15 @@ The term can be reduced to λx. 3
 
 
 
-(c) (λx. x) (λy. y) x  
+(c) (λx. x) (λy. y) x    
 
 
 
-![image-20211115174910195](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115174910195.png)
+
+
+![image-20211115174910195](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115174910195.png)  
+
+
 
 ```
 Not in β-normal form.
@@ -333,9 +337,13 @@ The term has the following β-reduction to normal form:
 
 
 
-(d) λx. x ((λy. y) x)  
+(d) λx. x ((λy. y) x)    
 
-![image-20211115175103743](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115175103743.png)
+
+
+![image-20211115175103743](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115175103743.png)  
+
+
 
 
 
@@ -350,4 +358,276 @@ The term can be reduced to β-normal form:
 ****
 
 #### Q9
+
+**Consider the function double in Haskell:**
+
+```haskell
+double x = x + x
+```
+
+**Use equational reasoning to compute double (double 4). Explain every step. Give at least one alternative computation.** 
+
+
+
+##### Solution
+
+```
+double (double 4) = {unfold inner double}
+double (4 + 4) = {do built-in addition}
+double 8 = {unfold double}
+8 + 8 = {do built-in addition}
+16
+```
+
+**An alternative computation:**
+
+```
+double (double 4) = {unfold outer double}
+(double 4) + (double 4) = {unfold left double}
+(4 + 4) + (double 4) = {do built-in addition}
+8 + (double 4) = {unfold double}
+8 + (4 + 4) = {do built-in addition}
+8 + 8 = {do built-in addition}
+16
+```
+
+
+
+##### Extension
+
+**Reduction Graph**:  
+
+
+
+![image-20211115192500642](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115192500642.png)  
+
+
+
+
+
+
+
+****
+
+#### Q10
+
+**Depict the following terms as trees, and clearly indicate all β-redexes.**
+
+(a) K I Ω ;
+
+(b) M1 = (λf. f 3) (λx.(λy. y) x); 
+
+(c) M2 = (λx.((λu. u) x) (λz. x Ω)) λy. z
+
+
+
+##### Solution:
+
+![image-20211115192730087](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115192730087.png)  
+
+
+
+![image-20211115192745137](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115192745137.png)  
+
+  ![image-20211115192855971](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115192855971.png)  
+
+![image-20211115192907735](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115192907735.png)  
+
+
+
+****
+
+#### Q11
+
+**(a) Give λ-terms M and N such that M and N are β-normal forms but M[x := N] is not a β-normal form.**
+
+
+
+##### Solution
+
+```
+Take for example 
+	M = x y, 
+	N = λu. u. 
+Then M and N are both in β-normal form, 
+but 
+	M[x := N] = (λu. u) y -> y
+is not in β-normal form.
+```
+
+
+
+**(b) Give λ-terms M and N such that M and N both have a β-normal form, but M[x := N] does not have a β-normal form.**
+
+
+
+##### Definition
+
+> **Has normal form:**
+>
+> - We say that a term has a normal form if it can be β-reduced in zero, one or more steps to a normal form.
+> - A normal form itself can also be considered as normal form.
+>
+> Example:
+>
+> - x has a normal form
+> - (λu.u )y has a normal form
+> - (λx.λy.x)w has a normal form
+>
+> Notice that $\Omega$​ does not have a normal form, since every reduction gets the same result.  
+>
+> ![image-20211115202746238](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115202746238.png)  
+
+
+
+##### Solution
+
+```
+Take for example 
+	M = x (λu. u u), 
+	N = λu. u u
+Then 
+	M and N are in β-normal form (so in particular they have a β-normal form),
+but 
+	M[x := N] = (λu. u u) (λu. u u) = Ω does not have a β-normal form.
+```
+
+
+
+**(c) Give terms M, N, P such that (M[x := N])[y := P] $\ne$ (M[y := P])[x := N].**
+
+
+
+```
+Take for example 
+	M = x, 
+	N = y, 
+	P = z. 
+Then 
+	(M[x := N])[y := P] = P = z 
+whereas 
+	(M[y := P])[x := N] = N = y.
+```
+
+
+
+****
+
+#### Q12
+
+**Reduce (λx. x x) (λs.λz. s z) to β-normal form.**
+
+
+
+##### Solution:
+
+
+
+````
+(λx. x x) (λs.λz. s z) →β
+(λs. λz. s z) (λs. λz. s z) →β
+λz.(λs. λz. s z) z →β
+λz. λz'. z z'
+````
+
+  
+
+![image-20211115203337760](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115203337760.png)  
+
+![image-20211115203359030](http://yunabell-image-repository.oss-cn-shanghai.aliyuncs.com/img/image-20211115203359030.png)  
+
+
+
+****
+
+#### Q13
+
+**Are the following terms terminating and/or weakly normalizing?**
+
+(a) (λx. x x)(λfy.(f y)) 
+
+(b) (λx. x Ω) (λy. z) 
+
+(c) (λx. x Ω) (λy. y) 
+
+(d) (λx. x x x) (λx. x x x)
+
+
+
+#### Definition
+
+> **Strongly normalizing:**
+>
+> - A term P is said to be terminating or strongly normalizing (SN) if **all** reduction sequences starting in P are finite. 
+> - That is: P is not the start of an infinite reduction.
+> - β-normal forms are terminating.
+> - Notice that a term that is not strongly normalizing has a an infinite reduction sequence.
+>
+> Example:
+>
+> - (λx. y) ((λx. x) z)
+> - (λx. x) (λy. y)
+
+> **Weakly normalizing:**
+>
+> - A term that admits a reduction sequence to normal form, we also say that the term has a normal form, is said to be weakly normalizing (WN).
+> -  A strongly normalizing term is weakly normalizing.
+> - There are weakly normalizing terms that are not strongly normalizing.
+>
+> Example:
+>
+> - (λx. y) Ω →$_\beta$ y  (WN not SN because can also be reduced as: (λx. y) Ω →$_\beta$ (λx. y) Ω →$_\beta$ . . .. )
+
+
+
+##### Solution
+
+
+
+(a) (λx. x x)(λfy.(f y)) 
+
+```
+(λx. x x)(λfy.(f y)) is strongly normalizing and hence also weakly normalizing.
+```
+
+
+
+(b) (λx. x Ω) (λy. z) 
+
+```
+(λx. x Ω) (λy. z) is weakly normalizing because it has a reduction to β-normal form:
+	(λx. x Ω) (λy. z) →β (λy. z) Ω →β z. 
+
+The term (λx. x Ω) (λy. z) is not strongly normalizing, 
+because it has Ω as subterm, which reduces in one step to itself.
+```
+
+
+
+(c) (λx. x Ω) (λy. y) 
+
+```
+ (λx. x Ω) (λy. y) is not weakly normalizing and hence not strongly normalizing.
+ 
+The reducts of (λx. x Ω) (λy. y) are (λx. x Ω) (λy. y) itself, and (λy. y) Ω, and Ω.
+```
+
+
+
+(d) (λx. x x x) (λx. x x x)
+
+```
+(λx. x x x) (λx. x x x) is not weakly normalizing and hence not strongly normalizing. 
+Using the 
+	A = λx. x x x, 
+the reduction sequence is
+A A →β A A A →β A A A A →β . . .¿ 
+(non-termination)
+```
+
+
+
+****
+
+## Exercise 2
 
