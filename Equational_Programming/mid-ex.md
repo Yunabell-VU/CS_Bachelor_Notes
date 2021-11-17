@@ -96,7 +96,7 @@
 
 
 
-##### Definition
+##### Definition:
 
 >  **α-convertible**:
 >
@@ -105,7 +105,7 @@
 
 
 
-##### Solution
+##### Solution:
 
 (a) x and y
 
@@ -175,7 +175,7 @@ not α-convertible
 
 
 
-##### Definition
+##### Definition:
 
 > **β-reduction:**
 >
@@ -265,7 +265,7 @@ not α-convertible
 
 
 
-##### Definition
+##### Definition:
 
 > **β-redex:**
 >
@@ -443,7 +443,7 @@ double (double 4) = {unfold outer double}
 
 
 
-##### Solution
+##### Solution:
 
 ```
 Take for example 
@@ -461,7 +461,7 @@ is not in β-normal form.
 
 
 
-##### Definition
+##### Definition:
 
 > **Has normal form:**
 >
@@ -480,7 +480,7 @@ is not in β-normal form.
 
 
 
-##### Solution
+##### Solution:
 
 ```
 Take for example 
@@ -554,7 +554,7 @@ whereas
 
 
 
-#### Definition
+##### Definition:
 
 > **Terminating / Strongly normalizing:**
 >
@@ -580,7 +580,7 @@ whereas
 
 
 
-##### Solution
+##### Solution:
 
 
 
@@ -654,15 +654,25 @@ A A →β A A A →β A A A A →β . . .¿
 
 
 
-##### Definition
+##### Definition:
 
 > **Fixed point:**
 >
-> (待补)
+> - A fixed point of a function f is an element `x` from the domain of `f` for which the following holds: `f(x) = x`.
+> - In general a function may have zero, one or more fixed points. For example, $x \rightarrow \ x^2$​  has besides 0 also 1 as fixed point.
+> - An important result in the λ-calculus is that **every term has a fixed point**.
 
 > **Fixed point combinator:**
 >
-> (待补)
+> -  A method to, given a λ-term `F`, construct a fixed point for `F`. This is done using a so-called fixed point combinator.
+> - The fixed point combinator due to Curry is the term Y defined as follows:
+>   - `Y = λf.(λx. f (x x)) (λx. f (x x))`
+>   - `F (Y F) =β Y F`
+>   - Notice, here we only have conversion, no reduction.
+> - The following fixed point combintator is due to Turing:
+>   - `T = (λx. λy. y (x x y)) (λx. λy. y (x x y))`
+>   - We write `T = t t `with `t = λx. λy. y (x x y)`.
+>   - `TF →β F (tt F ) = F (TF )`
 
 
 
@@ -720,7 +730,7 @@ Remark:
 
 
 
-##### Solution
+##### Solution:
 
 ```
 We consider Y (λa. b):
@@ -784,7 +794,7 @@ So we have
 
 
 
-##### Solution
+##### Solution:
 
 ```
 We use Assume a fixed point combinator P, 
@@ -905,25 +915,73 @@ So indeed
 
 
 
-##### Definition
+##### Definition:
 
-> **Call by value:**
+> **Call by value / Leftmost-innermost:**
 >
-> (待补)
+> - The leftmost-innermost reduction strategy tells us to contract in a term that is not in normal form from the leftmost-innermost redex.
+> - That is the redex that is the leftmost redex of all redexes that do not contain a redex as subterm.
+> - In a leftmost-innermost reduction sequence, **the arguments of a function are passed to the function body only if they are completely evaluated**.
+>
+> Example:
+>
+> - (λx. f x) ((λx. x) 3) →β (λx. f x) 3 →β f 3
+> - (λx. y) Ω →β (λx. y) Ω →β (λx. y) Ω →β . . .
+>
+> Advantages:
+>
+> - redex 不会被重复copy （只有 NF term 会被 copy）
+> - easy implementation
+>
+> Disadvantages:
+>
+> - Not normalizing. 可能原始 term 有 NF，但是通过Leftmost-innermost方法reduct后，导致了 infinite reduction
+> - 不是每一步reduction都对最后的结果做了有效贡献。
 
-> **Call by need:**
+> **Call by need / Leftmost-outermost:**
 >
-> (待补)
-
-> **Lazy reduction:**
+> - The leftmost-outermost reduction strategy prescribes to contract in a term that is not in normal form the lefmost-outermost redex.
+> - That is, from the outermost redexes (that are not contained by another redex) the leftmost-one.
+> - In a leftmost-outermost reduction sequence, **the arguments are passed to the function body without evaluating them to normal form**.
+> -  If a term M has a normal form P, then the leftmost-outermost reduction sequences starting in M ends after **finitely many steps** in P. 
+> - If a term M has no normal form, then the leftmost-outermost reduction sequences starting in M is infinite.
 >
-> (待补)
+> Example:
+>
+> - (λx. f x) ((λx. x) 3) →β f ((λx. x) 3) →β f 3
+> - (λx. y) Ω →β y
+>
+> Advantages:
+>
+> - 保证结果Normalizing。只要原始 term 有 NF，则一定会被找到 （根据confluence，一个 λ-term 有且只有一种 reduction 到 NF 的结果【unique】，即 一个λ-term 如果有 NF，那么不管通过什么路径找到 NF，这个 NF 都是一样的）
+> - 每一步的结果都对最终结果有效做功。（ leftmost-outermost reductions steps contribute to the normal form）
+>
+> Disadvantages:
+>
+> - Redexes may be copied ( does not necessarily yield a shortest reduction to normal form)
+> - relatively difficult to implement
 
 > **Weak head normal form:**
 >
-> (待补)
+> - A weak head normal form, abbreviation WHNF, is a λ-term of one of the following two shapes:
+>   - λx. P with P [some] λ-term
+>   - x P1 . . . Pn with n ≥ 0 and P1, . . . , Pn [arbitrary] λ-terms
+>   - 注意在 normal form 的定义中，只需将 [ ] 内容替换成 [normal]
+> - Every normal form is a WHNF, but not every WHNF is a normal form.
+> - A λ-term that is not in WHNF, is of the shape 
+>   - (λx. N) P1 . . . Pn
+>   - 即，顶端是 @，且左下是 λ
 
+>**Lazy reduction:**
+>
+>- Lazy evaluation is a **refinement of the leftmost-outermost** reduction strategy.
+>- Reduce terms if possible to weak head normal form. Moreover, copying of redexes is avoided by using sharing.
+>
+>**Lazy redex:**
+>
+>- The redex (λx. N) P1  in the term (λx. N) P1 . . . Pn is sometimes said to be the lazy redex.
 
+  
 
 ##### Solution:
 
@@ -1069,15 +1127,24 @@ myconcat[[1, 2, 3], [4, 5, 6]] = foldr append [] [[1, 2, 3], [4, 5, 6]]
 
 
 
-#### Definition
+##### Definition:
 
 > **Booleans:**
 >
-> (待补)
+> -  representations of true and false should be two different closed normal forms
+> - `true = λxy. x`     (带入两个argument，返回第一个，扔掉第二个)
+> - `false = λxy. y`（带入两个argument，返回第二个，扔掉第一个）
+> -  conditions (if–then–else) operator `ite`:
+>   - `ite = λbxy. b x y`
+>   - ite true P Q $\rightarrow _\beta$​​ P       （如果带入argument为真，则返回 P）
+>   - ite false P Q $\rightarrow _\beta$​ Q     （如果带入argument为假，则返回 Q）
+> - `not = λx. x false true`
+> - `and = λxy. x y false`
+> - `or = λxy. x true y`
 
 
 
-##### Solution
+##### Solution:
 
 ```
 Note that P and Q are arbitrary λ-terms.
@@ -1106,7 +1173,7 @@ P
 
 
 
-##### Solution
+##### Solution:
 
 ```
 or true false 				= 	(unfold the definition)
@@ -1132,11 +1199,21 @@ true
 
 
 
-##### Definition
+##### Definition:
+
+> **Church numerals:**
+>
+> - $c_0 = λs. λz. z$​
+> - $c_1 = λs. λz. s z$​
+> - $c_2 = λs. λz. s (s z)$​
+> - $c_n = λs. λz. s^n (z)$​.
 
 > **Successor (Suc):**
 >
-> - Successor and Church numerals, check CourseNotes_Lambda_Calculus -> 4.4 Church numerals
+> - the representation of the successor function adding one to a natural number
+>
+> - $Suc = λxsz. s (x s z)$
+> - $Suc\ c_2 = c_3$
 
 
 
@@ -1194,7 +1271,35 @@ c3
 
 
 
-#### （没有答案，待补）
+##### Definition:
+
+>**Pairs:**
+>
+>- an operator for pairing can be defined in the λ-calculus. Its definition is as follows:
+>  - `π = λlrz. z l r`
+>  - `π P Q = (λlrz. z l r) P Q` $\rightarrow _\beta$​​​ `λz. z P Q`
+>
+>**Projection:**
+>
+>- `π1 = λu. u (λlr. l)`   (相当于  `(λu. u) true`)
+>- `π2 = λu. u (λlr. r)`
+>- π1 (π P Q) $\rightarrow _\beta$​ P     (作用是从一个pair中取的第一个元素)
+>- π2 (π P Q) $\rightarrow _\beta$ Q    (作用是从一个pair中取的第二个元素)
+
+
+
+##### Solution:
+
+```
+π1 (π P Q)
+= (λu.u (λlr. l)) (π P Q)
+-> (π P Q) true
+= ((λlrz. z l r) P Q) true        ((λlrz. z l r) P Q 处理这种reduction时，就是 按 λ 绑定顺序代入，比如这里 P 对应 l ， Q 对应 r， 把对应位置的代入了，没有argument的就保留，如 λz)
+-> (λz.z P Q) true
+-> true P Q
+= (λxy. x) P Q
+-> P
+```
 
 
 
@@ -1210,7 +1315,67 @@ c3
 
 
 
-#### (没有答案，待补）
+##### Definition：
+
+> **Lists:**
+>
+> - Pairs can be used to define lists.
+> - A list is seen as either the empty list, often denoted by nil, or an element (the head) followed by a list (the tail).
+> - The operation that adds in the front an element to a list is often called `cons`.
+> - `nil = λxy. y`
+> - `cons = λht. λz. z h t`
+> - `head = λl. l(λht. h)`
+> - `tail = λl. l(λht. t)`
+> - `head (cons H T) ->β H`
+> - `tail (cons H T) ->β T`
+
+#### 
+
+##### Solution:
+
+```
+empty = λl . l (λx. λy. λz. false) true
+
+# 推导过程：
+We want :
+	empty nil = true
+	empty (cons H T) = false
+so:
+	empty nil = (λl . l ① ②) nil
+	(λl. l 代表要代入的list， 这里就是 nil )
+we know：
+	② is true
+	(因为 nil 代入 λl 之后，empty nil -> nil ① ②， 而 nil = λxy. y，也就是return第二个，不看第一个，那么 ① 不管是什么，都不影响，但是 ② 必须是 true)
+then:
+	empty = λl. l ① true
+	
+we then have:
+	empty (cons H T) = (λl. l ① true) (cons H T) ->
+	(cons H T) ① true =
+	((λht. λz.z ht) H T) ① true ->
+	(λz. z H T) ① true ->
+	(① H T) true
+	(推到这里, 只剩下判断 ① 到底要如何表达，
+	根据 (① H T) true 得出 ① 需要代入 3 个 argument （H, T, true），并且返回结果 false。
+	明显这里我们不管 H T 是什么状况，最后都是return false，
+	因此需要一个term 代入三个 argument，并且无视这三个argument，返回 false)
+
+so:
+	① = λa.λb.λc. false
+
+Therefore:
+	empty = λl. l (λa.λb.λc. false) true
+	
+Verify empty nil = true:
+
+empty nil =
+(λl. l (λa.λb.λc. false) true) (λxy. y) ->
+λxy. y ((λa.λb.λc. false) true) ->
+true
+
+```
+
+
 
 
 
